@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Google Bot
+User-agent: Googlebot
+Allow: /
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+
+# Specify sitemap
+Sitemap: https://blackarmy2006.github.io/portfolio/sitemap.xml
+
+# Cache control
+Cache-Control: max-age=86400
+
+# Crawl delay
+Crawl-delay: 0
+Request-rate: 30/1m

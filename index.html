@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Amine Alami - Pentester & Bug Bounty Hunter - Cybersécurité offensive, pentest Web & Réseau">
+    <meta name="keywords" content="pentester, bug bounty, cybersécurité, offensive security">
+    <meta name="author" content="Amine Alami">
+    <meta name="theme-color" content="#0a0e14">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%2300ff88' width='100' height='100'/><text x='50' y='65' font-size='60' font-weight='bold' text-anchor='middle' fill='%230a0e14' font-family='monospace'>A</text></svg>">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    
+    <title>Amine Alami | Pentester & Bug Bounty Hunter</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"
+    
+    <style>
+        :root {
+            --bg-dark: #0a0e14;
+            --bg-card: #12171f;
+            --accent-green: #00ff88;
+            --accent-cyan: #00d9ff;
+            --accent-red: #ff4d4d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --border-subtle: #1f2937;
+            --shadow-glow: rgba(0, 255, 136, 0.15);
+            --shadow-glow-red: rgba(255, 77, 77, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Matrix-style background effect */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .matrix-column {
+            position: absolute;
+            top: -100%;
+            font-size: 14px;
+            color: var(--accent-green);
+            animation: matrix-fall linear infinite;
+            white-space: pre;
+            line-height: 1.2;
+        }
+
+        @keyframes matrix-fall {
+            to { top: 100%; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            background: rgba(10, 14, 20, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            display: flex;
+            gap: 2rem;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-subtle);
+            border-left: 1px solid var(--border-subtle);
+            border-radius: 0 0 0 12px;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--accent-green);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-green);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                position: static;
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 1rem;
+                border-radius: 0;
+                border-bottom: 1px solid var(--border-subtle);
+            }
+        }
+
+        /* Header/Hero Section */
+        header {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .hero-content {
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-tag {
+            display: inline-block;
+            color: var(--accent-green);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--accent-green);
+            border-radius: 6px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 5px var(--shadow-glow); }
+            50% { box-shadow: 0 0 20px var(--shadow-glow); }
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .hero-description {
+            max-width: 650px;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-green);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-cyan);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border-subtle);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::before {
+            content: '$ ';
+            color: var(--accent-green);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.1);
+        }
+
+        .skill-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .skill-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent-green);
+        }
+
+        .skill-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Experience Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-green), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            border: 3px solid var(--bg-dark);
+            box-shadow: 0 0 10px var(--shadow-glow);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover::before {
+            width: 18px;
+            height: 18px;
+            left: -2.8rem;
+            top: 0.2rem;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-company {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .timeline-period {
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .timeline-role {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            list-style: none;
+        }
+
+        .timeline-description li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .timeline-description li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 217, 255, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 255, 136, 0.15);
+        }
+
+        .project-card:hover::after {
+            opacity: 1;
+        }
+
+        .project-content {
+            position: relative;
+            z-index: 1;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .project-tag {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--accent-green);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        /* Achievements */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .achievement-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.1);
+        }
+
+        .achievement-rank {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .achievement-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .contact-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.15);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-green);
+        }
+
+        .contact-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-value {
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-green);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            section {
+                padding: 4rem 0;
+            }
+
+            .timeline {
+                padding-left: 1rem;
+            }
+
+            .timeline-item {
+                padding-left: 1.5rem;
+            }
+
+            .timeline-item::before {
+                left: -1.8rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--accent-green);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            z-index: 99;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+            contain: layout style paint;
+            will-change: transform;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
+        }
+
+        .back-to-top.show {
+            display: flex;
+        }
+
+        /* Performance optimizations */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Lazy loading improvements */
+        img {
+            loading: lazy;
+        }
+    </style>
+</head>
+<body>
+    <!-- Matrix Background Effect -->
+    <div class="matrix-bg" id="matrixBg"></div>
+
+    <!-- Navigation -->
+    <nav id="nav">
+        <a href="#skills" class="nav-link">Compétences</a>
+        <a href="#experience" class="nav-link">Expérience</a>
+        <a href="#projects" class="nav-link">Projets</a>
+        <a href="#achievements" class="nav-link">Réalisations</a>
+        <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header>
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-tag">🛡️ OFFENSIVE SECURITY SPECIALIST</span>
+                <h1>AMINE<br>ALAMI</h1>
+                <p class="subtitle">Pentester • Bug Bounty Hunter • CTF Player</p>
+                <p class="hero-description">
+                    Ingénieur en cybersécurité offensive spécialisé dans le pentest Web & Réseau, 
+                    avec une approche méthodique : reconnaissance → tests contrôlés → reporting → 
+                    remédiation. Passionné par la découverte de vulnérabilités et l'amélioration 
+                    continue de la posture de sécurité.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#contact" class="btn btn-primary">📬 Me contacter</a>
+                    <a href="https://www.linkedin.com/in/amine-alami-b16180359/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">💼 LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Compétences</h2>
+                <p class="section-subtitle">Stack technique et expertise sécurité</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card scroll-reveal">
+                    <div class="skill-title">Pentest Web</div>
+                    <div class="skill-description">
+                        OWASP Top 10, authentification & sessions, contrôle d'accès, validation des entrées, 
+                        XSS, SQLi, CSRF, hardening applicatif
+                    </div>
+                </div>
+                <div class="skill-card scroll-reveal">
+                    <div class="skill-title">SIEM / SOC</div>
+                    <div class="skill-description">
+                        Wazuh (Windows/Linux), corrélation de logs, règles personnalisées, 
+                        active-response, MITRE ATT&CK mapping
+                    </div>
+                </div>
+                <div class="skill-card scroll-reveal">
+                    <div class="skill-title">Outils & Frameworks</div>
+                    <div class="skill-description">
+                        Burp Suite, Nmap, Wireshark, Git, Docker, Linux/Kali, 
+                        environnements de test sécurisés
+                    </div>
+                </div>
+                <div class="skill-card scroll-reveal">
+                    <div class="skill-title">Scripting & Automation</div>
+                    <div class="skill-description">
+                        Python, Bash, automatisation de tests, développement d'exploits, 
+                        parsing de résultats
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Expérience</h2>
+                <p class="section-subtitle">Parcours professionnel en cybersécurité</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item scroll-reveal">
+                    <div class="timeline-header">
+                        <span class="timeline-company">FM DESIGN</span>
+                        <span class="timeline-period">Août 2025 – Sept. 2025</span>
+                    </div>
+                    <div class="timeline-role">Stagiaire Pentest (Web / AppSec) • Rabat</div>
+                    <ul class="timeline-description">
+                        <li>Audit applicatif complet : authentification, sessions, contrôle d'accès, validation des entrées, configurations</li>
+                        <li>Rédaction de rapports détaillés (risques, preuves de concept, reproductions, recommandations)</li>
+                        <li>Retest après implémentation des corrections pour validation de la remédiation</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item scroll-reveal">
+                    <div class="timeline-header">
+                        <span class="timeline-company">Bugcrowd</span>
+                        <span class="timeline-period">2020 – Présent</span>
+                    </div>
+                    <div class="timeline-role">Bug Bounty Hunter (Responsible Disclosure)</div>
+                    <ul class="timeline-description">
+                        <li>Recherche proactive de vulnérabilités Web et failles de logique métier sur périmètres autorisés</li>
+                        <li>Reporting structuré et détaillé selon les standards de l'industrie</li>
+                        <li>Collaboration avec les équipes de sécurité pour la remédiation</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item scroll-reveal">
+                    <div class="timeline-header">
+                        <span class="timeline-company">Fiverr</span>
+                        <span class="timeline-period">Missions ponctuelles</span>
+                    </div>
+                    <div class="timeline-role">Freelance — WordPress Build & Pentest Web</div>
+                    <ul class="timeline-description">
+                        <li>Déploiement et configuration de sites WordPress avec mesures de hardening</li>
+                        <li>Audits de sécurité sur périmètre défini avec recommandations actionnables</li>
+                        <li>Accompagnement des clients dans l'amélioration de leur posture de sécurité</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Projets Cyber</h2>
+                <p class="section-subtitle">Projets techniques et recherche en sécurité</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card scroll-reveal">
+                    <div class="project-content">
+                        <div class="project-icon">🔍</div>
+                        <h3 class="project-title">SIEM Wazuh</h3>
+                        <p class="project-description">
+                            Déploiement all-in-one sur Ubuntu Server avec collecte de logs Windows/Linux, 
+                            règles personnalisées (local_rules.xml), active-response pour blocage IP, 
+                            et système d'alerting. Mai–Juin 2025.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Wazuh</span>
+                            <span class="project-tag">SIEM</span>
+                            <span class="project-tag">Linux</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card scroll-reveal">
+                    <div class="project-content">
+                        <div class="project-icon">🌐</div>
+                        <h3 class="project-title">SDN-Guardian</h3>
+                        <p class="project-description">
+                            Architecture Mininet + Ryu avec métriques OpenFlow, dataset de trafic 
+                            normal/attaques, recommandations de sécurité et mitigation côté contrôleur SDN.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">SDN</span>
+                            <span class="project-tag">OpenFlow</span>
+                            <span class="project-tag">Networking</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card scroll-reveal">
+                    <div class="project-content">
+                        <div class="project-icon">🔐</div>
+                        <h3 class="project-title">Security Research (RCE AppSec)</h3>
+                        <p class="project-description">
+                            Analyse d'impact de vulnérabilités RCE, développement de correctifs, 
+                            stratégies de durcissement, surveillance et mécanismes de mitigation.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">RCE</span>
+                            <span class="project-tag">AppSec</span>
+                            <span class="project-tag">Exploitation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card scroll-reveal">
+                    <div class="project-content">
+                        <div class="project-icon">🎣</div>
+                        <h3 class="project-title">Phishing Awareness Simulation</h3>
+                        <p class="project-description">
+                            Simulation type Instagram pour sensibilisation au phishing avec recommandations 
+                            (MFA, bonnes pratiques, détection des signaux d'alerte).
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Phishing</span>
+                            <span class="project-tag">Awareness</span>
+                            <span class="project-tag">Security</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Réalisations</h2>
+                <p class="section-subtitle">Compétitions et certifications</p>
+            </div>
+            <div class="achievements-grid">
+                <div class="achievement-card scroll-reveal">
+                    <div class="achievement-rank">6e/120</div>
+                    <div class="achievement-title">AXA Hackshield Graduate Hackathon</div>
+                    <div class="achievement-description">
+                        Team Phant0m • Décembre 2025
+                    </div>
+                </div>
+
+                <div class="achievement-card scroll-reveal">
+                    <div class="achievement-rank">44e 🌍</div>
+                    <div class="achievement-title">CTF International</div>
+                    <div class="achievement-description">
+                        44e mondial • 6e Afrique • 1er Maroc<br>
+                        34/34 challenges • UIR CyberGlitchers
+                    </div>
+                </div>
+
+                <div class="achievement-card scroll-reveal">
+                    <div class="achievement-rank">🎓</div>
+                    <div class="achievement-title">Formation</div>
+                    <div class="achievement-description">
+                        Diplôme d'ingénieur Cybersécurité (UIR, 2026)<br>
+                        AWS Academy — Cloud Security Foundations<br>
+                        eJPT — Préparation en cours
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Contact</h2>
+                <p class="section-subtitle">Restons connectés</p>
+            </div>
+            <div class="contact-grid">
+                <a href="mailto:amine.alami@uir.ac.ma" class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-label">Email</div>
+                    <div class="contact-value">amine.alami@uir.ac.ma</div>
+                </a>
+                <a href="tel:+212623125170" class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-label">Téléphone</div>
+                    <div class="contact-value">+212 06 23 12 51 70</div>
+                </a>
+                <a href="https://www.linkedin.com/in/amine-alami-b16180359/" target="_blank" rel="noopener noreferrer" class="contact-card">
+                    <div class="contact-icon">💼</div>
+                    <div class="contact-label">LinkedIn</div>
+                    <div class="contact-value">amine-alami-b16180359</div>
+                </a>
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-label">Localisation</div>
+                    <div class="contact-value">Rabat, Maroc</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/blackarmy2006" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.linkedin.com/in/amine-alami-b16180359/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://bugcrowd.com" target="_blank" rel="noopener noreferrer">Bugcrowd</a>
+            </div>
+            <p>&copy; 2026 Amine Alami. Tous droits réservés.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                🛡️ Pentester • Bug Bounty Hunter • CTF Player
+            </p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Retour au haut">↑</button>
+
+    <script>
+        // Performance: Debounce function
+        function debounce(func, delay) {
+            let timeoutId;
+            return function(...args) {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => func(...args), delay);
+            };
+        }
+
+        // Matrix background effect with throttle
+        function createMatrixEffect() {
+            const matrixBg = document.getElementById('matrixBg');
+            if (!matrixBg) return;
+            
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            const columnCount = Math.floor(window.innerWidth / 30);
+
+            // Clear and create in one step for better performance
+            matrixBg.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+
+            for (let i = 0; i < columnCount; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = `${i * 30}px`;
+                column.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                column.style.animationDelay = `${Math.random() * 5}s`;
+                
+                let text = '';
+                const charCount = Math.floor(Math.random() * 20) + 10;
+                for (let j = 0; j < charCount; j++) {
+                    text += chars[Math.floor(Math.random() * chars.length)] + '\n';
+                }
+                column.textContent = text;
+                fragment.appendChild(column);
+            }
+            matrixBg.appendChild(fragment);
+        }
+
+        // Optimized scroll reveal animation with Intersection Observer
+        function setupScrollReveal() {
+            const reveals = document.querySelectorAll('.scroll-reveal');
+            
+            if ('IntersectionObserver' in window) {
+                const options = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -100px 0px'
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, options);
+
+                reveals.forEach(element => observer.observe(element));
+            } else {
+                // Fallback for older browsers
+                reveals.forEach(el => el.classList.add('revealed'));
+            }
+        }
+
+        // Navigation setup
+        function setupNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        updateActiveNav();
+                    }
+                });
+            });
+        }
+
+        // Update active nav on scroll with debounce
+        const debouncedUpdateNav = debounce(updateActiveNav, 150);
+
+        function updateActiveNav() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Back to top button with debounce
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        const debouncedScroll = debounce(() => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn?.classList.add('show');
+            } else {
+                backToTopBtn?.classList.remove('show');
+            }
+            debouncedUpdateNav();
+        }, 100);
+
+        if (backToTopBtn) {
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Passive event listeners for better performance
+        window.addEventListener('scroll', debouncedScroll, { passive: true });
+        window.addEventListener('resize', debounce(() => {
+            const matrixBg = document.getElementById('matrixBg');
+            if (matrixBg) createMatrixEffect();
+        }, 300), { passive: true });
+
+        // Initialize on DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        function init() {
+            createMatrixEffect();
+            setupScrollReveal();
+            setupNavigation();
+            updateActiveNav();
+        }
+
+        // Preconnect to external resources
+        window.addEventListener('load', () => {
+            if ('PerformanceObserver' in window) {
+                try {
+                    new PerformanceObserver((list) => {
+                        for (const entry of list.getEntries()) {
+                            if (entry.entryType === 'navigation') {
+                                console.log('Page load time:', entry.loadEventEnd - entry.fetchStart, 'ms');
+                            }
+                        }
+                    }).observe({ entryTypes: ['navigation'] });
+                } catch (e) {}
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>

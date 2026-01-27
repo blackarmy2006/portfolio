@@ -1,0 +1,68 @@
+{
+  "name": "Amine Alami - Pentester & Bug Bounty Hunter",
+  "short_name": "Amine Alami",
+  "description": "Portfolio professionnel d'Amine Alami, ingénieur en cybersécurité offensive spécialisé en pentest Web & Réseau",
+  "start_url": "/portfolio/",
+  "display": "standalone",
+  "background_color": "#0a0e14",
+  "theme_color": "#00ff88",
+  "orientation": "portrait-primary",
+  "scope": "/portfolio/",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%2300ff88' width='192' height='192'/><text x='96' y='135' font-size='120' font-weight='bold' text-anchor='middle' fill='%230a0e14' font-family='monospace'>A</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%2300ff88' width='512' height='512'/><text x='256' y='380' font-size='320' font-weight='bold' text-anchor='middle' fill='%230a0e14' font-family='monospace'>A</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["technology", "business"],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%230a0e14' width='540' height='720'/><text x='270' y='360' font-size='80' font-weight='bold' text-anchor='middle' fill='%2300ff88' font-family='monospace'>AMINE ALAMI</text></svg>",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'><rect fill='%230a0e14' width='1280' height='720'/><text x='640' y='360' font-size='100' font-weight='bold' text-anchor='middle' fill='%2300ff88' font-family='monospace'>AMINE ALAMI</text></svg>",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Me contacter",
+      "short_name": "Contact",
+      "description": "Accéder directement à la section contact",
+      "url": "/portfolio/#contact",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%2300ff88' width='192' height='192'/><text x='96' y='135' font-size='120' font-weight='bold' text-anchor='middle' fill='%230a0e14' font-family='monospace'>✉</text></svg>",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Voir les projets",
+      "short_name": "Projets",
+      "description": "Accéder à la section des projets",
+      "url": "/portfolio/#projects",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%2300ff88' width='192' height='192'/><text x='96' y='135' font-size='120' font-weight='bold' text-anchor='middle' fill='%230a0e14' font-family='monospace'>⚡</text></svg>",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}
