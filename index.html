@@ -725,6 +725,47 @@
             max-width: 100%;
             height: auto;
         }
+
+        /* CTF Details Section */
+        .ctf-details {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .ctf-details h3 {
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            margin-top: 2rem;
+        }
+
+        .ctf-details h3:first-child {
+            margin-top: 0;
+        }
+
+        .ctf-details ul {
+            color: var(--text-secondary);
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .ctf-details li {
+            margin-bottom: 0.5rem;
+        }
+
+        .ctf-details p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .ctf-tagline {
+            color: var(--accent-green);
+            margin-top: 1.5rem;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -986,13 +1027,13 @@
     <section id="ctf">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Compétitions CTF</h2>
-                <p class="section-subtitle">Capture The Flag International - HackTheBox University CTF 2025</p>
+                <h2 class="section-title">Compétitions CTF & Hackathons</h2>
+                <p class="section-subtitle">Expériences en offensive security et compétitions techniques</p>
             </div>
             <div class="achievements-grid">
                 <div class="achievement-card scroll-reveal">
                     <div class="achievement-rank">44e 🌍</div>
-                    <div class="achievement-title">CTF International</div>
+                    <div class="achievement-title">HackTheBox University CTF 2025</div>
                     <div class="achievement-description">
                         <strong>Classements:</strong><br>
                         🌍 44e mondial<br>
@@ -1003,11 +1044,34 @@
                         👥 1014 équipes participantes
                     </div>
                 </div>
+                <div class="achievement-card scroll-reveal">
+                    <div class="achievement-rank">6e 🏆</div>
+                    <div class="achievement-title">AXA Hackshield Graduate Hackathon</div>
+                    <div class="achievement-description">
+                        <strong>Classement:</strong><br>
+                        🏆 6ème / 120 équipes<br>
+                        📅 13-14 Décembre 2025<br><br>
+                        <strong>Équipe:</strong><br>
+                        👥 Team Phant0m
+                    </div>
+                </div>
+                <div class="achievement-card scroll-reveal">
+                    <div class="achievement-rank">🔥 🇩🇿</div>
+                    <div class="achievement-title">NexHUNT CTF Algeria</div>
+                    <div class="achievement-description">
+                        <strong>Compétition:</strong><br>
+                        Capture The Flag International<br>
+                        🇩🇿 Algérie<br><br>
+                        <strong>Participation:</strong><br>
+                        Multi-domain challenges
+                    </div>
+                </div>
             </div>
             
             <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin-top: 2rem; scroll-reveal">
-                <h3 style="color: var(--accent-green); margin-bottom: 1rem; font-size: 1.2rem;">📋 Domaines couverts</h3>
-                <ul style="color: var(--text-secondary); list-style: none; padding-left: 1rem;">
+                <h3 style="color: var(--accent-green); margin-bottom: 1rem; font-size: 1.2rem;">🎯 HackTheBox University CTF 2025</h3>
+                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">📋 Domaines couverts</h4>
+                <ul style="color: var(--text-secondary); list-style: none; padding-left: 1rem; margin-bottom: 1rem;">
                     <li style="margin-bottom: 0.5rem;">🔍 <strong>Web Exploitation</strong></li>
                     <li style="margin-bottom: 0.5rem;">🔄 <strong>Reverse Engineering</strong></li>
                     <li style="margin-bottom: 0.5rem;">🔐 <strong>Cryptography</strong></li>
@@ -1015,7 +1079,7 @@
                     <li style="margin-bottom: 0.5rem;">⚙️ <strong>Pwn / Binary Exploitation</strong></li>
                 </ul>
                 
-                <h3 style="color: var(--accent-green); margin-top: 2rem; margin-bottom: 1rem; font-size: 1.2rem;">💡 Apprentissages clés</h3>
+                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">💡 Apprentissages clés</h4>
                 <p style="color: var(--text-secondary); line-height: 1.8;">
                     Cette compétition a renforcé les compétences techniques essentielles pour un Pentester et Red Teamer : 
                     méthodologie pentest rigoureuse, gestion du stress en environnement compétitif, travail collaboratif sous pression, 
@@ -1026,12 +1090,80 @@
                     🎯 La route continue… Next target: higher ranks & harder challenges
                 </p>
             </div>
+
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin-top: 2rem; scroll-reveal">
+                <h3 style="color: var(--accent-green); margin-bottom: 1rem; font-size: 1.2rem;">🏆 AXA Hackshield Graduate Hackathon 2025</h3>
+                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">📋 Événement & Contexte</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+                    Hackshield Graduate Hackathon organisé par <strong>AXA GBS Morocco</strong> en partenariat avec <strong>EMSI</strong> et <strong>SecDojo</strong>, 
+                    les 13 et 14 décembre 2025. Une compétition intense sur 2 jours réunissant 120 équipes autour de challenges en pentest et sécurité offensive.
+                </p>
+
+                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">🎯 Challenges & Domaines</h4>
+                <ul style="color: var(--text-secondary); list-style: none; padding-left: 1rem; margin-bottom: 1rem;">
+                    <li style="margin-bottom: 0.5rem;">🔒 <strong>Pentest & Sécurité Offensive</strong> - Challenges réalistes</li>
+                    <li style="margin-bottom: 0.5rem;">🌐 <strong>Web & Infrastructure Vulnérables</strong> - Scénarios en live</li>
+                    <li style="margin-bottom: 0.5rem;">💻 <strong>Solutions Techniques Innovantes</strong> - Sous pression temporelle</li>
+                    <li style="margin-bottom: 0.5rem;">👥 <strong>Travail Collaboratif</strong> - Résilience & coordination d'équipe</li>
+                </ul>
+
+                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">🚀 Résultats & Impact</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">
+                    <strong>6ème place sur 120 équipes</strong> - Une démonstration de compétence technique, créativité et capacité à performer sous pression. 
+                    Cette expérience a consolidé les fondamentaux du pentest, l'offensive security mindset et la collaboration en environnement compétitif.
+                </p>
+
+                <h4 style="color: var(--accent-cyan); margin-top: 2rem; margin-bottom: 1rem;">🙏 Remerciements</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">
+                    Merci à <strong>AXA GBS Morocco</strong> (Omar Maliani, Bochra LABIAD), <strong>EMSI</strong> et <strong>SecDojo</strong> 
+                    pour l'organisation de cet événement exceptionnel et pour avoir créé un espace propice à l'innovation en cybersécurité.
+                </p>
+
+                <p style="color: var(--accent-green); margin-top: 1.5rem; font-style: italic;">
+                    🎖️ Merci à Team Phant0m pour la collaboration soudée et l'ambition partagée.
+                </p>
+            </div>
+            
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin-top: 2rem; scroll-reveal">
+                <h3 style="color: var(--accent-green); margin-bottom: 1rem; font-size: 1.2rem;">🔥 NexHUNT CTF Algeria</h3>
+                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">📋 Événement & Contexte</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+                    NexHUNT CTF - Une compétition Capture The Flag internationale intense et enrichissante réunissant des joueurs en cybersécurité 
+                    passionnés de différents horizons. Un événement bien structuré et exigeant qui a testé les compétences pratiques à travers 
+                    plusieurs domaines spécialisés.
+                </p>
+
+                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">🎯 Domaines & Challenges</h4>
+                <ul style="color: var(--text-secondary); list-style: none; padding-left: 1rem; margin-bottom: 1rem;">
+                    <li style="margin-bottom: 0.5rem;">🔄 <strong>Reverse Engineering</strong></li>
+                    <li style="margin-bottom: 0.5rem;">🔐 <strong>Cryptography</strong></li>
+                    <li style="margin-bottom: 0.5rem;">🌐 <strong>Web Exploitation</strong></li>
+                    <li style="margin-bottom: 0.5rem;">🔎 <strong>Forensics</strong></li>
+                </ul>
+
+                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">💡 Apprentissages clés</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+                    Une opportunité exceptionnelle pour affiner les compétences pratiques dans plusieurs domaines spécialisés. 
+                    Au-delà des défis techniques, ce qui a rendu cette expérience vraiment précieuse était l'esprit d'équipe, 
+                    le partage de connaissances et la collaboration tout au long de la compétition.
+                </p>
+
+                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">🙏 Remerciements</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">
+                    Merci à tous les coéquipiers et organisateurs pour cette compétition bien structurée et exigeante. 
+                    Ces expériences continuent à façonner mon parcours en tant qu'étudiant en cybersécurité et joueur CTF.
+                </p>
+
+                <p style="color: var(--accent-green); margin-top: 1.5rem; font-style: italic;">
+                    🎯 Impatient pour d'autres CTFs, challenges et collaborations
+                </p>
+            </div>
             
             <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin-top: 2rem;">
                 <p style="color: var(--text-secondary); text-align: center;">
-                    <strong>Équipe:</strong> UIR CyberGlitchers<br>
-                    <strong>Compétition:</strong> HackTheBox University CTF 2025<br>
-                    <strong>Esprit:</strong> Collaboration, Réflexion Offensive, Dépassement de soi
+                    <strong>Équipes:</strong> UIR CyberGlitchers (HackTheBox) • Team Phant0m (AXA Hackshield) • Multi-team (NexHUNT)<br>
+                    <strong>Domaines d'intérêt:</strong> Pentest Web • Sécurité Offensive • Red Teaming • Bug Bounty • CTF<br>
+                    <strong>Esprit:</strong> Collaboration • Réflexion Offensive • Partage de Connaissances • Innovation
                 </p>
             </div>
         </div>
