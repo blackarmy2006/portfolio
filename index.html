@@ -22,22 +22,23 @@
     
     <style>
         :root {
-            --bg-dark: #0a0e14;
-            --bg-deep: #070a10;
-            --bg-card: #12171f;
-            --bg-card-strong: #0f141c;
-            --accent-green: #00ff88;
-            --accent-cyan: #00d9ff;
+            --bg-dark: #0a0f17;
+            --bg-deep: #060a12;
+            --bg-card: #121a24;
+            --bg-card-strong: #0f1520;
+            --accent-green: #00ffa3;
+            --accent-cyan: #00b9ff;
+            --accent-blue: #2f7cff;
             --accent-red: #ff4d4d;
             --text-primary: #e6edf3;
-            --text-secondary: #8b949e;
-            --text-muted: #9aa6b2;
-            --border-subtle: #1f2937;
-            --border-strong: #263246;
-            --shadow-glow: rgba(0, 255, 136, 0.15);
+            --text-secondary: #9aa6b2;
+            --text-muted: #7f8a97;
+            --border-subtle: #1a2738;
+            --border-strong: #243449;
+            --shadow-glow: rgba(0, 255, 163, 0.18);
             --shadow-glow-red: rgba(255, 77, 77, 0.15);
-            --shadow-card: rgba(8, 12, 20, 0.6);
-            --ring: rgba(0, 255, 136, 0.45);
+            --shadow-card: rgba(8, 12, 20, 0.7);
+            --ring: rgba(0, 255, 163, 0.5);
         }
 
         * {
@@ -52,8 +53,9 @@
 
         body {
             font-family: 'JetBrains Mono', monospace;
-            background: radial-gradient(circle at top, rgba(0, 217, 255, 0.08), transparent 55%),
-                        radial-gradient(circle at 10% 20%, rgba(0, 255, 136, 0.08), transparent 50%),
+            background: radial-gradient(circle at 12% 18%, rgba(0, 185, 255, 0.16), transparent 48%),
+                        radial-gradient(circle at 70% 15%, rgba(47, 124, 255, 0.16), transparent 45%),
+                        radial-gradient(circle at 20% 80%, rgba(0, 255, 163, 0.12), transparent 40%),
                         linear-gradient(180deg, var(--bg-deep), var(--bg-dark));
             color: var(--text-primary);
             line-height: 1.6;
@@ -70,15 +72,16 @@
         }
 
         body::before {
-            background: radial-gradient(circle at 80% 10%, rgba(0, 255, 136, 0.08), transparent 35%);
-            opacity: 0.8;
+            background: radial-gradient(circle at 80% 12%, rgba(0, 255, 163, 0.12), transparent 40%);
+            opacity: 0.9;
         }
 
         body::after {
-            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 60px 60px;
-            opacity: 0.25;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0 2px, transparent 2px 4px);
+            background-size: 60px 60px, 60px 60px, 100% 4px;
+            opacity: 0.18;
         }
 
         .skip-link {
@@ -108,7 +111,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            opacity: 0.03;
+            opacity: 0.05;
             z-index: 0;
             overflow: hidden;
         }
@@ -212,7 +215,7 @@
 
         .hero-grid {
             display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+            grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
             gap: 3rem;
             align-items: center;
         }
@@ -347,6 +350,82 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
+        }
+
+        .hero-stack {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .terminal-card {
+            background: linear-gradient(160deg, rgba(10, 16, 26, 0.98), rgba(8, 12, 20, 0.95));
+            border: 1px solid var(--border-strong);
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(6, 10, 18, 0.7);
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(15, 22, 33, 0.9);
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ff5f56;
+        }
+
+        .terminal-dot:nth-child(2) {
+            background: #ffbd2e;
+        }
+
+        .terminal-dot:nth-child(3) {
+            background: #27c93f;
+        }
+
+        .terminal-title {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .terminal-body {
+            padding: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .terminal-line {
+            margin-bottom: 0.6rem;
+        }
+
+        .terminal-prompt {
+            color: var(--accent-green);
+        }
+
+        .terminal-command {
+            color: var(--text-primary);
+        }
+
+        .terminal-output {
+            color: #8fd0ff;
+        }
+
+        .terminal-highlight {
+            color: var(--accent-green);
         }
 
         .cta-buttons {
@@ -986,33 +1065,60 @@
                             <a href="https://www.linkedin.com/in/amine-alami-b16180359/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">💼 LinkedIn</a>
                         </div>
                     </div>
-                    <aside class="hero-panel" aria-label="Résumé du profil">
-                        <p class="panel-kicker">Profil</p>
-                        <h2 class="panel-title">Offensive Security</h2>
-                        <p class="panel-subtitle">Pentest Web & Réseau • Bug Bounty</p>
-                        <ul class="panel-list">
-                            <li>
-                                <span>Bug Bounty</span>
-                                <strong>Bugcrowd — 2020 à présent</strong>
-                            </li>
-                            <li>
-                                <span>CTF</span>
-                                <strong>HTB University CTF 2025 — 44e mondial</strong>
-                            </li>
-                            <li>
-                                <span>Spécialité</span>
-                                <strong>OWASP Top 10, AppSec & Réseau</strong>
-                            </li>
-                            <li>
-                                <span>Localisation</span>
-                                <strong>Rabat, Maroc</strong>
-                            </li>
-                        </ul>
-                        <div class="panel-actions">
-                            <a href="#projects" class="btn btn-secondary">Voir les projets</a>
-                            <a href="#ctf" class="btn btn-ghost">Voir les CTF</a>
+                    <div class="hero-stack">
+                        <aside class="hero-panel" aria-label="Résumé du profil">
+                            <p class="panel-kicker">Profil</p>
+                            <h2 class="panel-title">Offensive Security</h2>
+                            <p class="panel-subtitle">Pentest Web & Réseau • Bug Bounty</p>
+                            <ul class="panel-list">
+                                <li>
+                                    <span>Bug Bounty</span>
+                                    <strong>Bugcrowd — 2020 à présent</strong>
+                                </li>
+                                <li>
+                                    <span>CTF</span>
+                                    <strong>HTB University CTF 2025 — 44e mondial</strong>
+                                </li>
+                                <li>
+                                    <span>Spécialité</span>
+                                    <strong>OWASP Top 10, AppSec & Réseau</strong>
+                                </li>
+                                <li>
+                                    <span>Localisation</span>
+                                    <strong>Rabat, Maroc</strong>
+                                </li>
+                            </ul>
+                            <div class="panel-actions">
+                                <a href="#projects" class="btn btn-secondary">Voir les projets</a>
+                                <a href="#ctf" class="btn btn-ghost">Voir les CTF</a>
+                            </div>
+                        </aside>
+                        <div class="terminal-card" aria-label="Terminal Kali">
+                            <div class="terminal-header">
+                                <div class="terminal-dots">
+                                    <span class="terminal-dot"></span>
+                                    <span class="terminal-dot"></span>
+                                    <span class="terminal-dot"></span>
+                                </div>
+                                <span class="terminal-title">Kali Console</span>
+                            </div>
+                            <div class="terminal-body">
+                                <div class="terminal-line">
+                                    <span class="terminal-prompt">root@kali</span>:<span class="terminal-highlight">~</span>$ 
+                                    <span class="terminal-command">nmap -sV -A target.local</span>
+                                </div>
+                                <div class="terminal-line terminal-output">Starting Nmap 7.94 ( https://nmap.org )</div>
+                                <div class="terminal-line terminal-output">Host is up (0.12s latency).</div>
+                                <div class="terminal-line terminal-output">PORT   STATE SERVICE VERSION</div>
+                                <div class="terminal-line terminal-output">443/tcp open  https   nginx 1.24.0</div>
+                                <div class="terminal-line terminal-output">80/tcp  open  http    nginx 1.24.0</div>
+                                <div class="terminal-line">
+                                    <span class="terminal-prompt">root@kali</span>:<span class="terminal-highlight">~</span>$ 
+                                    <span class="terminal-command">burpsuite --project-file recon.burp</span>
+                                </div>
+                            </div>
                         </div>
-                    </aside>
+                    </div>
                 </div>
             </div>
         </header>
