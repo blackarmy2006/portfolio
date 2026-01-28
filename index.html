@@ -7,6 +7,7 @@
     <meta name="keywords" content="pentester, bug bounty, cybersécurité, offensive security">
     <meta name="author" content="Amine Alami">
     <meta name="theme-color" content="#0a0e14">
+    <meta name="color-scheme" content="dark">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%2300ff88' width='100' height='100'/><text x='50' y='65' font-size='60' font-weight='bold' text-anchor='middle' fill='%230a0e14' font-family='monospace'>A</text></svg>">
@@ -22,15 +23,21 @@
     <style>
         :root {
             --bg-dark: #0a0e14;
+            --bg-deep: #070a10;
             --bg-card: #12171f;
+            --bg-card-strong: #0f141c;
             --accent-green: #00ff88;
             --accent-cyan: #00d9ff;
             --accent-red: #ff4d4d;
             --text-primary: #e6edf3;
             --text-secondary: #8b949e;
+            --text-muted: #9aa6b2;
             --border-subtle: #1f2937;
+            --border-strong: #263246;
             --shadow-glow: rgba(0, 255, 136, 0.15);
             --shadow-glow-red: rgba(255, 77, 77, 0.15);
+            --shadow-card: rgba(8, 12, 20, 0.6);
+            --ring: rgba(0, 255, 136, 0.45);
         }
 
         * {
@@ -45,10 +52,52 @@
 
         body {
             font-family: 'JetBrains Mono', monospace;
-            background: var(--bg-dark);
+            background: radial-gradient(circle at top, rgba(0, 217, 255, 0.08), transparent 55%),
+                        radial-gradient(circle at 10% 20%, rgba(0, 255, 136, 0.08), transparent 50%),
+                        linear-gradient(180deg, var(--bg-deep), var(--bg-dark));
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::before {
+            background: radial-gradient(circle at 80% 10%, rgba(0, 255, 136, 0.08), transparent 35%);
+            opacity: 0.8;
+        }
+
+        body::after {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.25;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            padding: 0.6rem 1rem;
+            background: var(--accent-green);
+            color: var(--bg-dark);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transform: translateY(-200%);
+            transition: transform 0.2s ease;
+            z-index: 200;
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
         }
 
         /* Matrix-style background effect */
@@ -93,7 +142,8 @@
             top: 0;
             right: 0;
             background: rgba(10, 14, 20, 0.95);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 1.5rem 2rem;
             display: flex;
             gap: 2rem;
@@ -101,12 +151,15 @@
             border-bottom: 1px solid var(--border-subtle);
             border-left: 1px solid var(--border-subtle);
             border-radius: 0 0 0 12px;
+            box-shadow: 0 20px 40px rgba(5, 8, 15, 0.45);
         }
 
         nav a {
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
             transition: all 0.3s ease;
             position: relative;
         }
@@ -143,6 +196,11 @@
             }
         }
 
+        main {
+            position: relative;
+            z-index: 1;
+        }
+
         /* Header/Hero Section */
         header {
             min-height: 100vh;
@@ -150,6 +208,13 @@
             align-items: center;
             padding: 4rem 0;
             position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+            gap: 3rem;
+            align-items: center;
         }
 
         .hero-content {
@@ -211,6 +276,79 @@
             line-height: 1.8;
         }
 
+        .hero-panel {
+            background: linear-gradient(145deg, rgba(18, 23, 31, 0.98), rgba(15, 20, 28, 0.95));
+            border: 1px solid var(--border-strong);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 30px 60px var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+        }
+
+        .panel-kicker {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .panel-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .panel-subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .panel-list {
+            list-style: none;
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .panel-list li {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            padding-bottom: 0.9rem;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+        }
+
+        .panel-list span {
+            color: var(--accent-cyan);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .panel-list strong {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .panel-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
         .cta-buttons {
             display: flex;
             gap: 1rem;
@@ -255,14 +393,44 @@
             transform: translateY(-2px);
         }
 
+        .btn-ghost {
+            background: rgba(0, 255, 136, 0.08);
+            color: var(--accent-green);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-ghost:hover {
+            background: rgba(0, 255, 136, 0.15);
+            transform: translateY(-2px);
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--ring);
+            outline-offset: 2px;
+        }
+
         /* Section Styling */
         section {
             padding: 6rem 0;
             position: relative;
+            scroll-margin-top: 120px;
+        }
+
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: min(900px, 90%);
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            transform: translateX(-50%);
         }
 
         .section-header {
             margin-bottom: 3rem;
+            max-width: 720px;
         }
 
         .section-title {
@@ -561,6 +729,52 @@
             line-height: 1.6;
         }
 
+        .ctf-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .ctf-title {
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .ctf-subtitle {
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .ctf-list {
+            color: var(--text-secondary);
+            list-style: none;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .ctf-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .ctf-block p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .ctf-tagline {
+            color: var(--accent-green);
+            margin-top: 1.5rem;
+            font-style: italic;
+        }
+
+        .ctf-summary {
+            text-align: center;
+        }
+
         /* Contact Section */
         .contact-grid {
             display: grid;
@@ -641,6 +855,14 @@
 
             section {
                 padding: 4rem 0;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-panel {
+                padding: 2rem;
             }
 
             .timeline {
@@ -726,54 +948,15 @@
             height: auto;
         }
 
-        /* CTF Details Section */
-        .ctf-details {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 2rem;
-        }
-
-        .ctf-details h3 {
-            color: var(--accent-green);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            margin-top: 2rem;
-        }
-
-        .ctf-details h3:first-child {
-            margin-top: 0;
-        }
-
-        .ctf-details ul {
-            color: var(--text-secondary);
-            list-style: none;
-            padding-left: 1rem;
-        }
-
-        .ctf-details li {
-            margin-bottom: 0.5rem;
-        }
-
-        .ctf-details p {
-            color: var(--text-secondary);
-            line-height: 1.8;
-        }
-
-        .ctf-tagline {
-            color: var(--accent-green);
-            margin-top: 1.5rem;
-            font-style: italic;
-        }
     </style>
 </head>
 <body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
     <!-- Matrix Background Effect -->
     <div class="matrix-bg" id="matrixBg"></div>
 
     <!-- Navigation -->
-    <nav id="nav">
+    <nav id="nav" aria-label="Navigation principale">
         <a href="#skills" class="nav-link">Compétences</a>
         <a href="#experience" class="nav-link">Expérience</a>
         <a href="#projects" class="nav-link">Projets</a>
@@ -783,26 +966,56 @@
         <a href="#contact" class="nav-link">Contact</a>
     </nav>
 
-    <!-- Hero Section -->
-    <header>
-        <div class="container">
-            <div class="hero-content">
-                <span class="hero-tag">🛡️ OFFENSIVE SECURITY SPECIALIST</span>
-                <h1>AMINE<br>ALAMI</h1>
-                <p class="subtitle">Pentester • Bug Bounty Hunter • CTF Player</p>
-                <p class="hero-description">
-                    Ingénieur en cybersécurité offensive spécialisé dans le pentest Web & Réseau, 
-                    avec une approche méthodique : reconnaissance → tests contrôlés → reporting → 
-                    remédiation. Passionné par la découverte de vulnérabilités et l'amélioration 
-                    continue de la posture de sécurité.
-                </p>
-                <div class="cta-buttons">
-                    <a href="#contact" class="btn btn-primary">📬 Me contacter</a>
-                    <a href="https://www.linkedin.com/in/amine-alami-b16180359/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">💼 LinkedIn</a>
+    <main id="main">
+        <!-- Hero Section -->
+        <header>
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <span class="hero-tag">🛡️ OFFENSIVE SECURITY SPECIALIST</span>
+                        <h1>AMINE<br>ALAMI</h1>
+                        <p class="subtitle">Pentester • Bug Bounty Hunter • CTF Player</p>
+                        <p class="hero-description">
+                            Ingénieur en cybersécurité offensive spécialisé dans le pentest Web & Réseau, 
+                            avec une approche méthodique : reconnaissance → tests contrôlés → reporting → 
+                            remédiation. Passionné par la découverte de vulnérabilités et l'amélioration 
+                            continue de la posture de sécurité.
+                        </p>
+                        <div class="cta-buttons">
+                            <a href="#contact" class="btn btn-primary">📬 Me contacter</a>
+                            <a href="https://www.linkedin.com/in/amine-alami-b16180359/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">💼 LinkedIn</a>
+                        </div>
+                    </div>
+                    <aside class="hero-panel" aria-label="Résumé du profil">
+                        <p class="panel-kicker">Profil</p>
+                        <h2 class="panel-title">Offensive Security</h2>
+                        <p class="panel-subtitle">Pentest Web & Réseau • Bug Bounty</p>
+                        <ul class="panel-list">
+                            <li>
+                                <span>Bug Bounty</span>
+                                <strong>Bugcrowd — 2020 à présent</strong>
+                            </li>
+                            <li>
+                                <span>CTF</span>
+                                <strong>HTB University CTF 2025 — 44e mondial</strong>
+                            </li>
+                            <li>
+                                <span>Spécialité</span>
+                                <strong>OWASP Top 10, AppSec & Réseau</strong>
+                            </li>
+                            <li>
+                                <span>Localisation</span>
+                                <strong>Rabat, Maroc</strong>
+                            </li>
+                        </ul>
+                        <div class="panel-actions">
+                            <a href="#projects" class="btn btn-secondary">Voir les projets</a>
+                            <a href="#ctf" class="btn btn-ghost">Voir les CTF</a>
+                        </div>
+                    </aside>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
     <!-- Skills Section -->
     <section id="skills">
@@ -1097,99 +1310,99 @@
                 </div>
             </div>
             
-            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin-top: 2rem;">
-                <h3 style="color: var(--accent-green); margin-bottom: 1rem; font-size: 1.2rem; margin-top: 0;">🎯 HackTheBox University CTF 2025</h3>
-                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">📋 Domaines couverts</h4>
-                <ul style="color: var(--text-secondary); list-style: none; padding-left: 1rem; margin-bottom: 1rem;">
-                    <li style="margin-bottom: 0.5rem;">🔍 <strong>Web Exploitation</strong></li>
-                    <li style="margin-bottom: 0.5rem;">🔄 <strong>Reverse Engineering</strong></li>
-                    <li style="margin-bottom: 0.5rem;">🔐 <strong>Cryptography</strong></li>
-                    <li style="margin-bottom: 0.5rem;">🔎 <strong>Forensics</strong></li>
-                    <li style="margin-bottom: 0.5rem;">⚙️ <strong>Pwn / Binary Exploitation</strong></li>
+            <div class="ctf-block">
+                <h3 class="ctf-title">🎯 HackTheBox University CTF 2025</h3>
+                <h4 class="ctf-subtitle">📋 Domaines couverts</h4>
+                <ul class="ctf-list">
+                    <li>🔍 <strong>Web Exploitation</strong></li>
+                    <li>🔄 <strong>Reverse Engineering</strong></li>
+                    <li>🔐 <strong>Cryptography</strong></li>
+                    <li>🔎 <strong>Forensics</strong></li>
+                    <li>⚙️ <strong>Pwn / Binary Exploitation</strong></li>
                 </ul>
                 
-                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">💡 Apprentissages clés</h4>
-                <p style="color: var(--text-secondary); line-height: 1.8;">
+                <h4 class="ctf-subtitle">💡 Apprentissages clés</h4>
+                <p>
                     Cette compétition a renforcé les compétences techniques essentielles pour un Pentester et Red Teamer : 
                     méthodologie pentest rigoureuse, gestion du stress en environnement compétitif, travail collaboratif sous pression, 
                     et approche offensive systématique. Une expérience invaluable pour l'évolution professionnelle en cybersécurité.
                 </p>
                 
-                <p style="color: var(--accent-green); margin-top: 1.5rem; font-style: italic;">
+                <p class="ctf-tagline">
                     🎯 La route continue… Next target: higher ranks & harder challenges
                 </p>
             </div>
 
-            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin-top: 2rem;">
-                <h3 style="color: var(--accent-green); margin-bottom: 1rem; font-size: 1.2rem; margin-top: 0;">🏆 AXA Hackshield Graduate Hackathon 2025</h3>
-                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">📋 Événement & Contexte</h4>
-                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+            <div class="ctf-block">
+                <h3 class="ctf-title">🏆 AXA Hackshield Graduate Hackathon 2025</h3>
+                <h4 class="ctf-subtitle">📋 Événement & Contexte</h4>
+                <p>
                     Hackshield Graduate Hackathon organisé par <strong>AXA GBS Morocco</strong> en partenariat avec <strong>EMSI</strong> et <strong>SecDojo</strong>, 
                     les 13 et 14 décembre 2025. Une compétition intense sur 2 jours réunissant 120 équipes autour de challenges en pentest et sécurité offensive.
                 </p>
 
-                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">🎯 Challenges & Domaines</h4>
-                <ul style="color: var(--text-secondary); list-style: none; padding-left: 1rem; margin-bottom: 1rem;">
-                    <li style="margin-bottom: 0.5rem;">🔒 <strong>Pentest & Sécurité Offensive</strong> - Challenges réalistes</li>
-                    <li style="margin-bottom: 0.5rem;">🌐 <strong>Web & Infrastructure Vulnérables</strong> - Scénarios en live</li>
-                    <li style="margin-bottom: 0.5rem;">💻 <strong>Solutions Techniques Innovantes</strong> - Sous pression temporelle</li>
-                    <li style="margin-bottom: 0.5rem;">👥 <strong>Travail Collaboratif</strong> - Résilience & coordination d'équipe</li>
+                <h4 class="ctf-subtitle">🎯 Challenges & Domaines</h4>
+                <ul class="ctf-list">
+                    <li>🔒 <strong>Pentest & Sécurité Offensive</strong> - Challenges réalistes</li>
+                    <li>🌐 <strong>Web & Infrastructure Vulnérables</strong> - Scénarios en live</li>
+                    <li>💻 <strong>Solutions Techniques Innovantes</strong> - Sous pression temporelle</li>
+                    <li>👥 <strong>Travail Collaboratif</strong> - Résilience & coordination d'équipe</li>
                 </ul>
 
-                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">🚀 Résultats & Impact</h4>
-                <p style="color: var(--text-secondary); line-height: 1.8;">
+                <h4 class="ctf-subtitle">🚀 Résultats & Impact</h4>
+                <p>
                     <strong>6ème place sur 120 équipes</strong> - Une démonstration de compétence technique, créativité et capacité à performer sous pression. 
                     Cette expérience a consolidé les fondamentaux du pentest, l'offensive security mindset et la collaboration en environnement compétitif.
                 </p>
 
-                <h4 style="color: var(--accent-cyan); margin-top: 2rem; margin-bottom: 1rem;">🙏 Remerciements</h4>
-                <p style="color: var(--text-secondary); line-height: 1.8;">
+                <h4 class="ctf-subtitle">🙏 Remerciements</h4>
+                <p>
                     Merci à <strong>AXA GBS Morocco</strong> (Omar Maliani, Bochra LABIAD), <strong>EMSI</strong> et <strong>SecDojo</strong> 
                     pour l'organisation de cet événement exceptionnel et pour avoir créé un espace propice à l'innovation en cybersécurité.
                 </p>
 
-                <p style="color: var(--accent-green); margin-top: 1.5rem; font-style: italic;">
+                <p class="ctf-tagline">
                     🎖️ Merci à Team Phant0m pour la collaboration soudée et l'ambition partagée.
                 </p>
             </div>
             
-            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin-top: 2rem;">
-                <h3 style="color: var(--accent-green); margin-bottom: 1rem; font-size: 1.2rem; margin-top: 0;">🔥 NexHUNT CTF Algeria</h3>
-                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">📋 Événement & Contexte</h4>
-                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+            <div class="ctf-block">
+                <h3 class="ctf-title">🔥 NexHUNT CTF Algeria</h3>
+                <h4 class="ctf-subtitle">📋 Événement & Contexte</h4>
+                <p>
                     NexHUNT CTF - Une compétition Capture The Flag internationale intense et enrichissante réunissant des joueurs en cybersécurité 
                     passionnés de différents horizons. Un événement bien structuré et exigeant qui a testé les compétences pratiques à travers 
                     plusieurs domaines spécialisés.
                 </p>
 
-                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">🎯 Domaines & Challenges</h4>
-                <ul style="color: var(--text-secondary); list-style: none; padding-left: 1rem; margin-bottom: 1rem;">
-                    <li style="margin-bottom: 0.5rem;">🔄 <strong>Reverse Engineering</strong></li>
-                    <li style="margin-bottom: 0.5rem;">🔐 <strong>Cryptography</strong></li>
-                    <li style="margin-bottom: 0.5rem;">🌐 <strong>Web Exploitation</strong></li>
-                    <li style="margin-bottom: 0.5rem;">🔎 <strong>Forensics</strong></li>
+                <h4 class="ctf-subtitle">🎯 Domaines & Challenges</h4>
+                <ul class="ctf-list">
+                    <li>🔄 <strong>Reverse Engineering</strong></li>
+                    <li>🔐 <strong>Cryptography</strong></li>
+                    <li>🌐 <strong>Web Exploitation</strong></li>
+                    <li>🔎 <strong>Forensics</strong></li>
                 </ul>
 
-                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">💡 Apprentissages clés</h4>
-                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
+                <h4 class="ctf-subtitle">💡 Apprentissages clés</h4>
+                <p>
                     Une opportunité exceptionnelle pour affiner les compétences pratiques dans plusieurs domaines spécialisés. 
                     Au-delà des défis techniques, ce qui a rendu cette expérience vraiment précieuse était l'esprit d'équipe, 
                     le partage de connaissances et la collaboration tout au long de la compétition.
                 </p>
 
-                <h4 style="color: var(--accent-cyan); margin-bottom: 1rem;">🙏 Remerciements</h4>
-                <p style="color: var(--text-secondary); line-height: 1.8;">
+                <h4 class="ctf-subtitle">🙏 Remerciements</h4>
+                <p>
                     Merci à tous les coéquipiers et organisateurs pour cette compétition bien structurée et exigeante. 
                     Ces expériences continuent à façonner mon parcours en tant qu'étudiant en cybersécurité et joueur CTF.
                 </p>
 
-                <p style="color: var(--accent-green); margin-top: 1.5rem; font-style: italic;">
+                <p class="ctf-tagline">
                     🎯 Impatient pour d'autres CTFs, challenges et collaborations
                 </p>
             </div>
             
-            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 2rem; margin-top: 2rem;">
-                <p style="color: var(--text-secondary); text-align: center;">
+            <div class="ctf-block ctf-summary">
+                <p>
                     <strong>Équipes:</strong> UIR CyberGlitchers (HackTheBox) • Team Phant0m (AXA Hackshield) • Multi-team (NexHUNT)<br>
                     <strong>Domaines d'intérêt:</strong> Pentest Web • Sécurité Offensive • Red Teaming • Bug Bounty • CTF<br>
                     <strong>Esprit:</strong> Collaboration • Réflexion Offensive • Partage de Connaissances • Innovation
@@ -1198,37 +1411,38 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Contact</h2>
-                <p class="section-subtitle">Restons connectés</p>
-            </div>
-            <div class="contact-grid">
-                <a href="mailto:amine.alami@uir.ac.ma" class="contact-card">
-                    <div class="contact-icon">📧</div>
-                    <div class="contact-label">Email</div>
-                    <div class="contact-value">amine.alami@uir.ac.ma</div>
-                </a>
-                <a href="tel:+212623125170" class="contact-card">
-                    <div class="contact-icon">📱</div>
-                    <div class="contact-label">Téléphone</div>
-                    <div class="contact-value">+212 06 23 12 51 70</div>
-                </a>
-                <a href="https://www.linkedin.com/in/amine-alami-b16180359/" target="_blank" rel="noopener noreferrer" class="contact-card">
-                    <div class="contact-icon">💼</div>
-                    <div class="contact-label">LinkedIn</div>
-                    <div class="contact-value">amine-alami-b16180359</div>
-                </a>
-                <div class="contact-card">
-                    <div class="contact-icon">📍</div>
-                    <div class="contact-label">Localisation</div>
-                    <div class="contact-value">Rabat, Maroc</div>
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Contact</h2>
+                    <p class="section-subtitle">Restons connectés</p>
+                </div>
+                <div class="contact-grid">
+                    <a href="mailto:amine.alami@uir.ac.ma" class="contact-card">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">amine.alami@uir.ac.ma</div>
+                    </a>
+                    <a href="tel:+212623125170" class="contact-card">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-label">Téléphone</div>
+                        <div class="contact-value">+212 06 23 12 51 70</div>
+                    </a>
+                    <a href="https://www.linkedin.com/in/amine-alami-b16180359/" target="_blank" rel="noopener noreferrer" class="contact-card">
+                        <div class="contact-icon">💼</div>
+                        <div class="contact-label">LinkedIn</div>
+                        <div class="contact-value">amine-alami-b16180359</div>
+                    </a>
+                    <div class="contact-card">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-label">Localisation</div>
+                        <div class="contact-value">Rabat, Maroc</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
