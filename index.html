@@ -1838,14 +1838,7 @@
 
                 let index = 0;
                 const typeNext = () => {
-                    if (index >= items.length) {
-                        setTimeout(() => {
-                            index = 0;
-                            clearItems();
-                            typeNext();
-                        }, 1400);
-                        return;
-                    }
+                    if (index >= items.length) return;
 
                     const el = items[index];
                     const text = el.dataset.text || '';
