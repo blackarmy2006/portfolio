@@ -84,6 +84,51 @@
             opacity: 0.18;
         }
 
+        .kali-aurora {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .kali-logo {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cpath fill='none' stroke='%2300b9ff' stroke-opacity='0.08' stroke-width='18' d='M220 500c60-80 140-140 220-140s160 60 220 140'/%3E%3Cpath fill='none' stroke='%2300ffa3' stroke-opacity='0.08' stroke-width='18' d='M160 520c80-120 190-210 280-210s200 90 280 210'/%3E%3Cpath fill='none' stroke='%2300b9ff' stroke-opacity='0.08' stroke-width='18' d='M320 520c30-40 70-70 120-70s90 30 120 70'/%3E%3Cpath fill='none' stroke='%2300ffa3' stroke-opacity='0.06' stroke-width='18' d='M400 250c40 0 80 40 80 90s-40 90-80 90-80-40-80-90 40-90 80-90z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 85% 65%;
+            background-size: 55vmax;
+            opacity: 0.55;
+            filter: blur(0.5px);
+        }
+
+        .kali-blob {
+            position: absolute;
+            width: 55vmax;
+            height: 55vmax;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 163, 0.18), transparent 60%);
+            mix-blend-mode: screen;
+            filter: blur(10px);
+            animation: drift 18s ease-in-out infinite;
+        }
+
+        .kali-blob.blue {
+            background: radial-gradient(circle, rgba(47, 124, 255, 0.2), transparent 60%);
+            animation-duration: 22s;
+        }
+
+        .kali-blob.cyan {
+            background: radial-gradient(circle, rgba(0, 185, 255, 0.2), transparent 60%);
+            animation-duration: 26s;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translate(-10%, -10%) scale(1); }
+            50% { transform: translate(10%, 8%) scale(1.08); }
+        }
+
         .skip-link {
             position: absolute;
             left: 1rem;
@@ -245,6 +290,7 @@
             border: 1px solid var(--accent-green);
             border-radius: 6px;
             animation: pulse 2s ease-in-out infinite;
+            letter-spacing: 0.12em;
         }
 
         @keyframes pulse {
@@ -262,6 +308,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 255, 163, 0.12);
         }
 
         .subtitle {
@@ -357,6 +404,14 @@
             gap: 1.5rem;
         }
 
+        .hero-stack > * {
+            width: 100%;
+        }
+
+        .hero-content {
+            max-width: 720px;
+        }
+
         .terminal-card {
             background: linear-gradient(160deg, rgba(10, 16, 26, 0.98), rgba(8, 12, 20, 0.95));
             border: 1px solid var(--border-strong);
@@ -406,6 +461,8 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
             line-height: 1.7;
+            background-image: linear-gradient(transparent 94%, rgba(255, 255, 255, 0.04) 94%);
+            background-size: 100% 1.8rem;
         }
 
         .terminal-line {
@@ -426,6 +483,23 @@
 
         .terminal-highlight {
             color: var(--accent-green);
+        }
+
+        .typing {
+            display: inline-block;
+            white-space: pre;
+            overflow: hidden;
+            border-right: 2px solid transparent;
+        }
+
+        .typing.typing-active {
+            border-right-color: var(--accent-green);
+            animation: caret 0.8s step-end infinite;
+        }
+
+        @keyframes caret {
+            0%, 100% { border-color: transparent; }
+            50% { border-color: var(--accent-green); }
         }
 
         .cta-buttons {
@@ -944,6 +1018,12 @@
                 padding: 2rem;
             }
 
+            .kali-logo {
+                background-position: center 35%;
+                background-size: 80vmax;
+                opacity: 0.4;
+            }
+
             .timeline {
                 padding-left: 1rem;
             }
@@ -1018,6 +1098,13 @@
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
+            .kali-blob,
+            .typing.typing-active {
+                animation: none !important;
+            }
+            .typing {
+                border-right: none;
+            }
         }
 
         /* Lazy loading improvements */
@@ -1031,6 +1118,12 @@
 </head>
 <body>
     <a class="skip-link" href="#main">Aller au contenu</a>
+    <div class="kali-aurora" aria-hidden="true">
+        <span class="kali-logo"></span>
+        <span class="kali-blob" style="top:-20%; left:-10%;"></span>
+        <span class="kali-blob blue" style="top:10%; right:-20%;"></span>
+        <span class="kali-blob cyan" style="bottom:-25%; left:20%;"></span>
+    </div>
     <!-- Matrix Background Effect -->
     <div class="matrix-bg" id="matrixBg"></div>
 
@@ -1105,16 +1198,16 @@
                             <div class="terminal-body">
                                 <div class="terminal-line">
                                     <span class="terminal-prompt">root@kali</span>:<span class="terminal-highlight">~</span>$ 
-                                    <span class="terminal-command">nmap -sV -A target.local</span>
+                                    <span class="terminal-command typing" data-text="nmap -sV -A target.local"></span>
                                 </div>
-                                <div class="terminal-line terminal-output">Starting Nmap 7.94 ( https://nmap.org )</div>
-                                <div class="terminal-line terminal-output">Host is up (0.12s latency).</div>
-                                <div class="terminal-line terminal-output">PORT   STATE SERVICE VERSION</div>
-                                <div class="terminal-line terminal-output">443/tcp open  https   nginx 1.24.0</div>
-                                <div class="terminal-line terminal-output">80/tcp  open  http    nginx 1.24.0</div>
+                                <div class="terminal-line terminal-output"><span class="typing" data-text="Starting Nmap 7.94 ( https://nmap.org )"></span></div>
+                                <div class="terminal-line terminal-output"><span class="typing" data-text="Host is up (0.12s latency)."></span></div>
+                                <div class="terminal-line terminal-output"><span class="typing" data-text="PORT   STATE SERVICE VERSION"></span></div>
+                                <div class="terminal-line terminal-output"><span class="typing" data-text="443/tcp open  https   nginx 1.24.0"></span></div>
+                                <div class="terminal-line terminal-output"><span class="typing" data-text="80/tcp  open  http    nginx 1.24.0"></span></div>
                                 <div class="terminal-line">
                                     <span class="terminal-prompt">root@kali</span>:<span class="terminal-highlight">~</span>$ 
-                                    <span class="terminal-command">burpsuite --project-file recon.burp</span>
+                                    <span class="terminal-command typing" data-text="burpsuite --project-file recon.burp"></span>
                                 </div>
                             </div>
                         </div>
@@ -1717,6 +1810,47 @@
             setupScrollReveal();
             setupNavigation();
             updateActiveNav();
+            setupTyping();
+        }
+
+        function setupTyping() {
+            const typingItems = Array.from(document.querySelectorAll('.typing'));
+            if (!typingItems.length) return;
+
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reducedMotion) {
+                typingItems.forEach((el) => {
+                    el.textContent = el.dataset.text || el.textContent;
+                    el.classList.remove('typing-active');
+                });
+                return;
+            }
+
+            typingItems.forEach((el) => {
+                el.textContent = '';
+                el.classList.remove('typing-active');
+            });
+
+            let index = 0;
+            const typeNext = () => {
+                if (index >= typingItems.length) return;
+                const el = typingItems[index];
+                const text = el.dataset.text || '';
+                let i = 0;
+                el.classList.add('typing-active');
+                const tick = () => {
+                    if (i < text.length) {
+                        el.textContent += text[i++];
+                        setTimeout(tick, 18);
+                    } else {
+                        el.classList.remove('typing-active');
+                        index += 1;
+                        setTimeout(typeNext, 250);
+                    }
+                };
+                tick();
+            };
+            typeNext();
         }
 
         // Preconnect to external resources
