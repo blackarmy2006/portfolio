@@ -487,7 +487,7 @@
 
         .typing {
             display: inline-block;
-            white-space: pre;
+            white-space: pre-wrap;
             overflow: hidden;
             border-right: 2px solid transparent;
         }
@@ -1143,15 +1143,12 @@
         <header>
             <div class="container">
                 <div class="hero-grid">
-                    <div class="hero-content">
+                    <div class="hero-content" data-typing-group="hero">
                         <span class="hero-tag">🛡️ OFFENSIVE SECURITY SPECIALIST</span>
                         <h1>AMINE<br>ALAMI</h1>
-                        <p class="subtitle">Pentester • Bug Bounty Hunter • CTF Player</p>
+                        <p class="subtitle"><span class="typing" data-text="Pentester • Bug Bounty Hunter • CTF Player"></span></p>
                         <p class="hero-description">
-                            Ingénieur en cybersécurité offensive spécialisé dans le pentest Web & Réseau, 
-                            avec une approche méthodique : reconnaissance → tests contrôlés → reporting → 
-                            remédiation. Passionné par la découverte de vulnérabilités et l'amélioration 
-                            continue de la posture de sécurité.
+                            <span class="typing" data-text="Ingénieur en cybersécurité offensive spécialisé dans le pentest Web & Réseau, avec une approche méthodique : reconnaissance → tests contrôlés → reporting → remédiation. Passionné par la découverte de vulnérabilités et l'amélioration continue de la posture de sécurité."></span>
                         </p>
                         <div class="cta-buttons">
                             <a href="#contact" class="btn btn-primary">📬 Me contacter</a>
@@ -1159,26 +1156,26 @@
                         </div>
                     </div>
                     <div class="hero-stack">
-                        <aside class="hero-panel" aria-label="Résumé du profil">
+                        <aside class="hero-panel" aria-label="Résumé du profil" data-typing-group="profile">
                             <p class="panel-kicker">Profil</p>
-                            <h2 class="panel-title">Offensive Security</h2>
-                            <p class="panel-subtitle">Pentest Web & Réseau • Bug Bounty</p>
+                            <h2 class="panel-title"><span class="typing" data-text="Offensive Security"></span></h2>
+                            <p class="panel-subtitle"><span class="typing" data-text="Pentest Web & Réseau • Bug Bounty"></span></p>
                             <ul class="panel-list">
                                 <li>
                                     <span>Bug Bounty</span>
-                                    <strong>Bugcrowd — 2020 à présent</strong>
+                                    <strong><span class="typing" data-text="Bugcrowd — 2020 à présent"></span></strong>
                                 </li>
                                 <li>
                                     <span>CTF</span>
-                                    <strong>HTB University CTF 2025 — 44e mondial</strong>
+                                    <strong><span class="typing" data-text="HTB University CTF 2025 — 44e mondial"></span></strong>
                                 </li>
                                 <li>
                                     <span>Spécialité</span>
-                                    <strong>OWASP Top 10, AppSec & Réseau</strong>
+                                    <strong><span class="typing" data-text="OWASP Top 10, AppSec & Réseau"></span></strong>
                                 </li>
                                 <li>
                                     <span>Localisation</span>
-                                    <strong>Rabat, Maroc</strong>
+                                    <strong><span class="typing" data-text="Rabat, Maroc"></span></strong>
                                 </li>
                             </ul>
                             <div class="panel-actions">
@@ -1195,7 +1192,7 @@
                                 </div>
                                 <span class="terminal-title">Kali Console</span>
                             </div>
-                            <div class="terminal-body">
+                            <div class="terminal-body" data-typing-group="terminal">
                                 <div class="terminal-line">
                                     <span class="terminal-prompt">root@kali</span>:<span class="terminal-highlight">~</span>$ 
                                     <span class="terminal-command typing" data-text="nmap -sV -A target.local"></span>
@@ -1814,43 +1811,61 @@
         }
 
         function setupTyping() {
-            const typingItems = Array.from(document.querySelectorAll('.typing'));
-            if (!typingItems.length) return;
+            const typingGroups = document.querySelectorAll('[data-typing-group]');
+            if (!typingGroups.length) return;
 
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (reducedMotion) {
-                typingItems.forEach((el) => {
-                    el.textContent = el.dataset.text || el.textContent;
-                    el.classList.remove('typing-active');
-                });
-                return;
-            }
+            typingGroups.forEach((group) => {
+                const items = Array.from(group.querySelectorAll('.typing'));
+                if (!items.length) return;
 
-            typingItems.forEach((el) => {
-                el.textContent = '';
-                el.classList.remove('typing-active');
-            });
-
-            let index = 0;
-            const typeNext = () => {
-                if (index >= typingItems.length) return;
-                const el = typingItems[index];
-                const text = el.dataset.text || '';
-                let i = 0;
-                el.classList.add('typing-active');
-                const tick = () => {
-                    if (i < text.length) {
-                        el.textContent += text[i++];
-                        setTimeout(tick, 18);
-                    } else {
+                if (reducedMotion) {
+                    items.forEach((el) => {
+                        el.textContent = el.dataset.text || el.textContent;
                         el.classList.remove('typing-active');
-                        index += 1;
-                        setTimeout(typeNext, 250);
-                    }
+                    });
+                    return;
+                }
+
+                const clearItems = () => {
+                    items.forEach((el) => {
+                        el.textContent = '';
+                        el.classList.remove('typing-active');
+                    });
                 };
-                tick();
-            };
-            typeNext();
+
+                clearItems();
+
+                let index = 0;
+                const typeNext = () => {
+                    if (index >= items.length) {
+                        setTimeout(() => {
+                            index = 0;
+                            clearItems();
+                            typeNext();
+                        }, 1400);
+                        return;
+                    }
+
+                    const el = items[index];
+                    const text = el.dataset.text || '';
+                    let i = 0;
+                    el.classList.add('typing-active');
+                    const tick = () => {
+                        if (i < text.length) {
+                            el.textContent += text[i++];
+                            setTimeout(tick, 16);
+                        } else {
+                            el.classList.remove('typing-active');
+                            index += 1;
+                            setTimeout(typeNext, 220);
+                        }
+                    };
+                    tick();
+                };
+
+                typeNext();
+            });
         }
 
         // Preconnect to external resources
